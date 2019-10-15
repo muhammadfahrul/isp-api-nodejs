@@ -24,7 +24,7 @@ Route.group(() => {
   Route.get('/users', 'UserController.showUsers')
   Route.get('/users/:id', 'UserController.usersId')
   Route.post('/add-users', 'UserController.addUsers')
-  Route.put('/edit-users/:id', 'UserController.editUsers')
+  Route.put('/update-users/:id', 'UserController.editUsers')
   Route.delete('/delete-users/:id', 'UserController.deleteUsers')
 
   
@@ -38,28 +38,28 @@ Route.group(() => {
   Route.get('/identitas', 'IdentitaController.showIdentitas')
   Route.get('/identitas/:id', 'IdentitaController.identitasId')
   Route.post('/add-identitas', 'IdentitaController.addIdentitas')
-  Route.put('/edit-identitas/:id', 'IdentitaController.editIdentitas')
+  Route.put('/update-identitas/:id', 'IdentitaController.editIdentitas')
   Route.delete('/delete-identitas/:id', 'IdentitaController.deleteIdentitas')
 
 
   Route.get('/klasifikasi', 'KlasifikasiController.showKlasifikasi')
   Route.get('/klasifikasi/:id', 'KlasifikasiController.klasifikasiId')
   Route.post('/add-klasifikasi', 'KlasifikasiController.addKlasifikasi')
-  Route.put('/edit-klasifikasi/:id', 'KlasifikasiController.editKlasifikasi')
+  Route.put('/update-klasifikasi/:id', 'KlasifikasiController.editKlasifikasi')
   Route.delete('/delete-klasifikasi/:id', 'KlasifikasiController.deleteKlasifikasi')
 
 
   Route.get('/kodefikasi', 'KodefikasiController.showKodefikasi')
   Route.get('/kodefikasi/:id', 'KodefikasiController.kodefikasiId')
   Route.post('/add-kodefikasi', 'KodefikasiController.addKodefikasi')
-  Route.put('/edit-kodefikasi/:id', 'KodefikasiController.editKodefikasi')
+  Route.put('/update-kodefikasi/:id', 'KodefikasiController.editKodefikasi')
   Route.delete('/delete-kodefikasi/:id', 'KodefikasiController.deleteKodefikasi')
 
 
   Route.get('/sarana', 'SaranaController.showSarana')
   Route.get('/sarana/:id', 'SaranaController.saranaId')
   Route.post('/add-sarana', 'SaranaController.addSarana')
-  Route.put('/edit-sarana/:id', 'SaranaController.editSarana')
+  Route.put('/update-sarana/:id', 'SaranaController.editSarana')
   Route.delete('/delete-sarana/:id', 'SaranaController.deleteSarana')
 
   Route.post('login/facebook', 'LoginController.facebook')
