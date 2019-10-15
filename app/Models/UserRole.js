@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class UserRole extends Model {
+    static get table () {
+        return 'user_role'
+    }
 }
 
 module.exports = UserRole
