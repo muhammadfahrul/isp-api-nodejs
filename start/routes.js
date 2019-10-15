@@ -31,7 +31,7 @@ Route.group(() => {
   Route.get('/user-role', 'UserRoleController.showUserRole')
   Route.get('/user-role/:id', 'UserRoleController.userRoleId')
   Route.post('/add-user-role', 'UserRoleController.addUserRole')
-  Route.put('/edit-user-role/:id', 'UserRoleController.editUserRole')
+  Route.put('/update-user-role/:id', 'UserRoleController.editUserRole')
   Route.delete('/delete-user-role/:id', 'UserRoleController.deleteUserRole')
 
 

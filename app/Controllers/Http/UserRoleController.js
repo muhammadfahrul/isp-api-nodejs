@@ -1,6 +1,6 @@
+'use strict'
 const UserRole = use('App/Models/UserRole')
 const { validate } = use('Validator')
-'use strict'
 
 class UserRoleController {
     async showUserRole({request, response}) {
@@ -9,8 +9,10 @@ class UserRoleController {
         return response.json(user_role);
     }
 
-    async userRoleId({request, response}) {
-        
+    async userRoleId({request, response, params}) {
+        const user_role = await UserRole.find(params.id)
+
+        return response.json(user_role);
     }
 
     async addUserRole({request, response}) {
@@ -38,8 +40,8 @@ class UserRoleController {
         });
     }
 
-    async editUserRole({request, response}) {
-        
+    async editUserRole({request, response, params}) {
+        const user_role_req = request.only(['nama'])
         const user_role = await UserRole.find(params.id)
         if (!user_role) {
             return response.status(404).json({data: 'Role not found'})
@@ -55,8 +57,17 @@ class UserRoleController {
 
     }
 
-    async deleteUserRole({request, response}) {
-        
+    async deleteUserRole({request, response, params}) {
+        const user_role = await UserRole.find(params.id)
+        if (!user_role) {
+            return response.status(404).json({data: 'Role not found'})
+        }
+        await user_role.delete()
+
+        return response.json({
+            message : 'Success',
+            status : 204
+        })
     }
 }
 
