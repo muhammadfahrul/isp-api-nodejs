@@ -13,7 +13,7 @@ class UserRoleController {
         
     }
 
-    async editUserROle({request, response}) {
+    async editUserRole({request, response}) {
         
     }
 

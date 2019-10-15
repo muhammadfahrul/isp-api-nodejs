@@ -21,27 +21,28 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async handle (error, { request, response }) {
-    if(error.status == 404) {
-      response.json({
-        status: false,
-        message: "404 Not Found"
-      })
-    }else if(error.status == 401) {
-      response.json({
-        status: false,
-        message: "Unauthorized"
-      })
-    }else if(error.status == 500) {
-      response.json({
-        status: false,
-        message: "Internal Server Error"
-      })
-    }else if(error.status == 400) {
-      response.json({
-        status: false,
-        message: "Bad Request"
-      })
-    }
+    return response.status(error.status).send(error.message)
+    // if(error.status == 404) {
+    //   response.json({
+    //     status: false,
+    //     message: "404 Not Found"
+    //   })
+    // }else if(error.status == 401) {
+    //   response.json({
+    //     status: false,
+    //     message: "Unauthorized"
+    //   })
+    // }else if(error.status == 500) {
+    //   response.json({
+    //     status: false,
+    //     message: "Internal Server Error"
+    //   })
+    // }else if(error.status == 400) {
+    //   response.json({
+    //     status: false,
+    //     message: "Bad Request"
+    //   })
+    // }
   }
 
   /**
