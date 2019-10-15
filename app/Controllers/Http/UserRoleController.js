@@ -1,4 +1,5 @@
 const UserRole = use('App/Models/UserRole')
+const { validate } = use('Validator')
 'use strict'
 
 class UserRoleController {
