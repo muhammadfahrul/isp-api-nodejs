@@ -2,7 +2,7 @@
 
 class LoginController {
     async redirectFacebook({request, response}) {
-
+        
     }
 
     async callbackFacebook({request, response}) {
