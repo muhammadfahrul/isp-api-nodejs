@@ -26,7 +26,7 @@ class SaranaController {
 
     async addSarana({request, response}) {
         const rules = {
-            nama: 'required|unique',
+            nama: 'required',
             is_active : 'required'
         }
 

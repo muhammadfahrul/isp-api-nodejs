@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Kodefikasi extends Model {
+    static get table () {
+        return 'kodefikasi'
+    }
 }
 
 module.exports = Kodefikasi

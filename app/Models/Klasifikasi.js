@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Klasifikasi extends Model {
+    static get table () {
+        return 'klasifikasi'
+    }
 }
 
 module.exports = Klasifikasi
