@@ -62,9 +62,7 @@ Route.group(() => {
   Route.put('/edit-sarana/:id', 'SaranaController.editSarana')
   Route.delete('/delete-sarana/:id', 'SaranaController.deleteSarana')
 
-  Route.post('login/facebook', 'LoginController.redirectFacebook')
-  Route.post('facebook/callback', 'LoginController.callbackFacebook')
+  Route.post('login/facebook', 'LoginController.facebook')
+  Route.post('login/google', 'LoginController.google')
 
-  Route.post('login/google', 'LoginController.redirectGoogle')
-  Route.post('google/callback', 'LoginController.callbackGoogle')
 }).prefix('api/v1')
