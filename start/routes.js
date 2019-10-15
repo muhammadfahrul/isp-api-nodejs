@@ -28,11 +28,11 @@ Route.group(() => {
   Route.delete('/delete-users/:id', 'UserController.deleteUsers')
 
   
-  Route.get('/user-role', 'UserController.showUserRole')
-  Route.get('/user-role/:id', 'UserController.userRoleId')
-  Route.post('/add-user-role', 'UserController.addUserRole')
-  Route.put('/edit-user-role/:id', 'UserController.editUserRole')
-  Route.delete('/delete-user-role/:id', 'UserController.deleteUserRole')
+  Route.get('/user-role', 'UserRoleController.showUserRole')
+  Route.get('/user-role/:id', 'UserRoleController.userRoleId')
+  Route.post('/add-user-role', 'UserRoleController.addUserRole')
+  Route.put('/edit-user-role/:id', 'UserRoleController.editUserRole')
+  Route.delete('/delete-user-role/:id', 'UserRoleController.deleteUserRole')
 
 
   Route.get('/identitas', 'IdentitaController.showIdentitas')
