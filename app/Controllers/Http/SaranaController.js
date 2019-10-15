@@ -9,6 +9,7 @@ class SaranaController {
         
         return response.json({
             status: true,
+            message: 'Data Sarana',
             data: sarana
         })
     }
@@ -18,6 +19,7 @@ class SaranaController {
 
         return response.json({
             status: true,
+            message: 'Sarana Id',
             data: saranaId
         })
     }
@@ -63,7 +65,8 @@ class SaranaController {
 
         return response.json({
             status: true,
-            message: 'Updated Sarana Successfully'
+            message: 'Updated Sarana Successfully',
+            data: editSarana
         })
     }
 
@@ -73,7 +76,8 @@ class SaranaController {
 
         return response.json({
             status: true,
-            message: 'Deleted Sarana Successfully'
+            message: 'Deleted Sarana Successfully',
+            data: deleteSarana
         })
     }
 }
