@@ -7,6 +7,9 @@ class Klasifikasi extends Model {
     static get table () {
         return 'klasifikasi'
     }
+    Identitas(){
+    	return this.belongTo('App/Models/Identitas')
+    }
 }
 
 module.exports = Klasifikasi
