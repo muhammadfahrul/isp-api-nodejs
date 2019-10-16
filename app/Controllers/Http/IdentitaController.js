@@ -1,5 +1,5 @@
 'use strict'
-const Identitas = use('App/Models/Identitas')
+const Identitas = use('App/Models/Identita')
 const { validate } = use('Validator')
 
 class IdentitaController {
@@ -9,7 +9,7 @@ class IdentitaController {
         return response.json(identitas);
     }
 
-    async identitasId({request, response}) {
+    async identitasId({request, response, params}) {
         const identitas = await Identitas.find(params.id)
 
         return response.json(identitas);
@@ -17,12 +17,12 @@ class IdentitaController {
 
     async addIdentitas({request, response}) {
         const rules = {
-            klasifikasi_id : 'required',
+            klasifikasi_id : 'required|exists:klasifikasi,id',
             tahun : 'required',
             nomor_urut : 'required'
         }
 
-        const identitas_req = request.only(['klasifikasi_id, tahun, nomor_urut'])
+        const identitas_req = request.only(['klasifikasi_id', 'tahun', 'nomor_urut'])
         const validation = await validate(identitas_req, rules)
 
         if (validation.fails()) {
@@ -44,13 +44,15 @@ class IdentitaController {
         });
     }
 
-    async editIdentitas({request, response}) {
-        const identitas_req = request.only(['klasifikasi_id, tahun, nomor_urut'])
+    async editIdentitas({request, response, params}) {
+        const identitas_req = request.only(['klasifikasi_id', 'tahun', 'nomor_urut'])
         const identitas = await Identitas.find(params.id)
         if (!identitas) {
             return response.status(404).json({data: 'Role not found'})
         }
-        identitas.nama = identitas_req.nama
+        identitas.klasifikasi_id = identitas_req.klasifikasi_id
+        identitas.tahun = identitas_req.tahun
+        identitas.nomor_urut = identitas_req.nomor_urut
         await identitas.save()
 
         return response.json({
@@ -60,7 +62,7 @@ class IdentitaController {
         })
     }
 
-    async deleteIdentitas({request, response}) {
+    async deleteIdentitas({request, response, params}) {
         const identitas = await Identitas.find(params.id)
         if (!identitas) {
             return response.status(404).json({data: 'Role not found'})
