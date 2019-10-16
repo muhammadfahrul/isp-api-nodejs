@@ -10,6 +10,9 @@ class Klasifikasi extends Model {
     Identitas(){
     	return this.belongTo('App/Models/Identitas')
     }
+    kodefikasi() {
+        return this.belongsTo('App/Models/Klasifikasi')
+    }
 }
 
 module.exports = Klasifikasi
