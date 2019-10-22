@@ -62,6 +62,13 @@ Route.group(() => {
   Route.put('/update-sarana/:id', 'SaranaController.editSarana')
   Route.delete('/delete-sarana/:id', 'SaranaController.deleteSarana')
 
+
+  Route.get('/galeri', 'GaleriController.showGaleri')
+  Route.get('/galeri/:id', 'GaleriController.galeriId')
+  Route.post('/add-galeri', 'GaleriController.addGaleri')
+  Route.put('/update-galeri/:id', 'GaleriController.editGaleri')
+  Route.delete('/delete-galeri/:id', 'GaleriController.deleteGaleri')
+
   Route.post('login/facebook', 'LoginController.facebook')
   Route.post('login/google', 'LoginController.google')
 
