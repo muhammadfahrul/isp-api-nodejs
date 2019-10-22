@@ -7,6 +7,9 @@ class Kodefikasi extends Model {
     static get table () {
         return 'kodefikasi'
     }
+    klasifikasi() {
+        return this.hasMany('App/Models/Klasifikasi')
+    }
 }
 
 module.exports = Kodefikasi

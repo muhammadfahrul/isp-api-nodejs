@@ -8,10 +8,10 @@ class Klasifikasi extends Model {
         return 'klasifikasi'
     }
     Identitas(){
-    	return this.belongTo('App/Models/Identitas')
+    	return this.belongsTo('App/Models/Identitas')
     }
     kodefikasi() {
-        return this.belongsTo('App/Models/Klasifikasi')
+        return this.belongsTo('App/Models/Kodefikasi')
     }
 }
 

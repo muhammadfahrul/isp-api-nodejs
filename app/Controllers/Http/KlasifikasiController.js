@@ -4,14 +4,20 @@ const { validate } = use('Validator')
 
 class KlasifikasiController {
     async showKlasifikasi({request, response}) {
-        let klasifikasi = await Klasifikasi.query().with('kodefikasi').fetch()
-        return response.json(klasifikasi)
+        const klasifikasi = await Klasifikasi.query().with('kodefikasi').limit(10).orderBy('created_at', 'desc').fetch()
+        return response.json({
+            message : 'Success',
+            result : klasifikasi
+        })
     }
 
     async klasifikasiId({request, response, params}) {
         const klasifikasi = await Klasifikasi.find(params.id)
 
-        return response.json(klasifikasi);
+        return response.json({
+            message : 'Success',
+            result : klasifikasi
+        })
     }
 
     async addKlasifikasi({request, response}) {

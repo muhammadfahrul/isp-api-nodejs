@@ -6,13 +6,19 @@ class UserRoleController {
     async showUserRole({request, response}) {
         const user_role = await UserRole.all()
 
-        return response.json(user_role);
+        return response.json({
+            message : 'Success',
+            result : user_role
+        })
     }
 
     async userRoleId({request, response, params}) {
         const user_role = await UserRole.find(params.id)
 
-        return response.json(user_role);
+        return response.json({
+            message : 'Success',
+            result : user_role
+        })
     }
 
     async addUserRole({request, response}) {
