@@ -7,6 +7,9 @@ class Identita extends Model {
     static get table () {
         return 'identitas'
     }
+    User(){
+        return this.hasMany('App/Models/User')
+    }
 }
 
 module.exports = Identita
