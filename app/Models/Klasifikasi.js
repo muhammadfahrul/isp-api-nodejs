@@ -7,11 +7,14 @@ class Klasifikasi extends Model {
     static get table () {
         return 'klasifikasi'
     }
-    Identitas(){
-    	return this.belongsTo('App/Models/Identitas')
-    }
+    // identitas(){
+    // 	return this.belongsTo('App/Models/Identita')
+    // }
     kodefikasi() {
         return this.belongsTo('App/Models/Kodefikasi')
+    }
+    users() {
+        return this.belongsTo('App/Models/User')
     }
 }
 

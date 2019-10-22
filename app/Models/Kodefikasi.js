@@ -10,6 +10,14 @@ class Kodefikasi extends Model {
     klasifikasi() {
         return this.hasMany('App/Models/Klasifikasi')
     }
+
+    users() {
+        return this.belongsTo('App/Models/User')
+    }
+
+    sarana() {
+        return this.belongsTo('App/Models/Sarana')
+    }
 }
 
 module.exports = Kodefikasi

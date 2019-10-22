@@ -39,8 +39,12 @@ class User extends Model {
     return 'users'
   }
 
-  sarana() {
-    return this.hasOne('App/Models/Sarana')
+  kodefikasi() {
+    return this.hasMany('App/Models/Kodefikasi')
+  }
+
+  klasifikasi() {
+    return this.hasMany('App/Models/Klasifikasi')
   }
 }
 

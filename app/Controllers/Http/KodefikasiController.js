@@ -5,7 +5,7 @@ const Helpers = use('Helpers')
 
 class KodefikasiController {
     async showKodefikasi({request, response}) {
-        const kodefikasi = await Kodefikasi.query().with('klasifikasi').limit(10).orderBy('created_at', 'desc').fetch()
+        const kodefikasi = await Kodefikasi.query().with('users').with('sarana').orderBy('created_at', 'desc').fetch()
         return response.json({
             message: 'Success',
             result: kodefikasi
