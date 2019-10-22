@@ -1,29 +1,40 @@
 'use strict'
 const Identitas = use('App/Models/Identita')
 const { validate } = use('Validator')
+const Helpers = use('Helpers')
 
 class IdentitaController {
     async showIdentitas({request, response}) {
         const identitas = await Identitas.all()
 
-        return response.json(identitas);
+        return response.json({
+            status: 400,
+            message: 'Data Identitas',
+            data: identitas 
+        })
     }
 
     async identitasId({request, response, params}) {
         const identitas = await Identitas.find(params.id)
 
-        return response.json(identitas);
+        return response.json({
+            status: 400,
+            message: 'Identitas ID',
+            data: identitas
+        })
     }
 
     async addIdentitas({request, response}) {
         const rules = {
+            user_id: 'required|exists:users,id',
             klasifikasi_id : 'required|exists:klasifikasi,id',
             tahun : 'required',
-            nomor_urut : 'required'
+            nomor_urut : 'required',
+            deskripsi: 'required'
         }
 
-        const identitas_req = request.only(['klasifikasi_id', 'tahun', 'nomor_urut'])
-        const validation = await validate(identitas_req, rules)
+        // const identitas_req = request.only(['klasifikasi_id', 'tahun', 'nomor_urut'])
+        const validation = await validate(request.all(), rules)
 
         if (validation.fails()) {
             return response.json({
@@ -32,16 +43,28 @@ class IdentitaController {
         }
 
         const identitas = new Identitas()
-        identitas.klasifikasi_id = identitas_req.klasifikasi_id
-        identitas.tahun = identitas_req.tahun
-        identitas.nomor_urut = identitas_req.nomor_urut
+        identitas.user_id = request.body.user_id
+        identitas.klasifikasi_id = request.body.klasifikasi_id
+        identitas.tahun = request.body.tahun
+        identitas.nomor_urut = request.body.nomor_urut
+
+        const myPicture = request.file('gambar', {
+            types: ['image'],
+            size: '2mb'
+        })
+
+        await myPicture.move(Helpers.publicPath('uploads/identitas'))
+        identitas.gambar = new Date()+getTime()+'.'+myPicture.subtype
+
+        identitas.deskripsi = request.body.deskripsi        
 
         await identitas.save();
 
         return response.json({
-            message : 'Success',
-            data : identitas
-        });
+            status: 400,
+            message: 'Created Identitas Successfully',
+            data: identitas  
+        })
     }
 
     async editIdentitas({request, response, params}) {
@@ -56,9 +79,9 @@ class IdentitaController {
         await identitas.save()
 
         return response.json({
-            message : 'Succces',
-            status : 200,
-            data : identitas
+            status: 400,
+            message: 'Updated Identitas Successfully',
+            data: identitas 
         })
     }
 
@@ -70,8 +93,9 @@ class IdentitaController {
         await identitas.delete()
 
         return response.json({
-            message : 'Success',
-            status : 204
+            status: 400,
+            message: 'Deleted Identitas Successfully',
+            data: identitas
         })
     }
 }

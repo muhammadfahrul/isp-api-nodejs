@@ -36,7 +36,7 @@ class User extends Model {
   }
 
   static get table () {
-    return 'user'
+    return 'users'
   }
 
   sarana() {

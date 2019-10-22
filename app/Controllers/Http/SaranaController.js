@@ -11,7 +11,7 @@ class SaranaController {
         const sarana = await Sarana.all()
         
         return response.json({
-            status: true,
+            status: 200,
             message: 'Data Sarana',
             data: sarana
         })
@@ -21,15 +21,15 @@ class SaranaController {
         const saranaId = await Sarana.find(request.params.id)
 
         return response.json({
-            status: true,
-            message: 'Sarana Id',
+            status: 201,
+            message: 'Sarana ID',
             data: saranaId
         })
     }
 
     async addSarana({request, response}) {
         const rules = {
-            user_id: 'required',
+            user_id: 'required|exists:users,id',
             nama: 'required',
             deskripsi: 'required',
             is_active : 'required'
@@ -39,7 +39,6 @@ class SaranaController {
 
         if(validation.fails()) {
             return response.json({
-                status: false,
                 message: validation.messages()
             })
         }
@@ -52,7 +51,7 @@ class SaranaController {
             types: ['image'],
             size: '2mb'
         })
-        await myPicture.move(Helpers.publicPath('upload/sarana'))
+        await myPicture.move(Helpers.publicPath('uploads/sarana'))
         addSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
 
         addSarana.deskripsi = request.body.deskripsi
@@ -65,7 +64,7 @@ class SaranaController {
         await addSarana.save()
 
         return response.json({
-            status: true,
+            status: 400,
             message: 'Created Sarana Successfully',
             data: addSarana
         })
@@ -73,7 +72,7 @@ class SaranaController {
 
     async editSarana({request, response}) {
         const rules = {
-            user_id: 'required',
+            user_id: 'required|exists:users,id',
             nama: 'required',
             deskripsi: 'required',
             is_active : 'required'
@@ -93,7 +92,7 @@ class SaranaController {
         editSarana.nama = request.body.nama
 
         const myPicture = request.file('gambar')
-        myPicture.move(Helpers.publicPath('upload/sarana'),{
+        myPicture.move(Helpers.publicPath('uploads/sarana'),{
             name: editSarana.gambar
         })
         editSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
@@ -103,7 +102,7 @@ class SaranaController {
         await editSarana.save()
 
         return response.json({
-            status: true,
+            status: 400,
             message: 'Updated Sarana Successfully',
             data: editSarana
         })
@@ -114,7 +113,7 @@ class SaranaController {
         await deleteSarana.delete()
 
         return response.json({
-            status: true,
+            status: 400,
             message: 'Deleted Sarana Successfully',
             data: deleteSarana  
         })
