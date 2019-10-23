@@ -7,8 +7,13 @@ class Identita extends Model {
     static get table () {
         return 'identitas'
     }
-    User(){
-        return this.hasMany('App/Models/User')
+
+    klasifikasi() {
+        return this.belongsTo('App/Models/Klasifikasi')
+    }
+
+    users(){
+        return this.belongsTo('App/Models/User')
     }
 }
 

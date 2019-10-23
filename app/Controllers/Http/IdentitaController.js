@@ -5,11 +5,11 @@ const Helpers = use('Helpers')
 
 class IdentitaController {
     async showIdentitas({request, response}) {
-        const identitas = await Identitas.all()
+        const identitas = await Identitas.query().with('users').with('klasifikasi').fetch()
 
         return response.json({
-            status: 400,
-            message: 'Data Identitas',
+            status: 200,
+            message: 'Success',
             data: identitas 
         })
     }
@@ -18,8 +18,8 @@ class IdentitaController {
         const identitas = await Identitas.find(params.id)
 
         return response.json({
-            status: 400,
-            message: 'Identitas ID',
+            status: 200,
+            message: 'Success',
             data: identitas
         })
     }
@@ -61,8 +61,8 @@ class IdentitaController {
         await identitas.save();
 
         return response.json({
-            status: 400,
-            message: 'Created Identitas Successfully',
+            status: 201,
+            message: 'Success',
             data: identitas  
         })
     }
