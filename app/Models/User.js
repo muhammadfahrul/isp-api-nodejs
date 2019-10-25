@@ -46,6 +46,10 @@ class User extends Model {
   klasifikasi() {
     return this.hasMany('App/Models/Klasifikasi')
   }
+
+  user_role() {
+    return this.belongsTo('App/Models/UserRole')
+  }
 }
 
 module.exports = User

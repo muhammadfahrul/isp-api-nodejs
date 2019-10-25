@@ -5,7 +5,7 @@ const {validate} = use('Validator')
 
 class UserController {
     async showUsers({request, response}) {
-        const user = await User.all()
+        const user = await User.query().with('user_role').fetch()
 
         return response.json({
             status: true,
