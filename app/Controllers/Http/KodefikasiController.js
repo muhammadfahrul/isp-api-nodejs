@@ -43,14 +43,14 @@ class KodefikasiController {
         }
 
         const kodefikasi = new Kodefikasi()
-        kodefikasi.nama = kodefikasi_req.nama
-        kodefikasi.user_id = kodefikasi_req.user_id
-        kodefikasi.sarana_id = kodefikasi_req.sarana_id
-        kodefikasi.kode = kodefikasi_req.kode
-        kodefikasi.jumlah_gandar = kodefikasi_req.jumlah_gandar
-        kodefikasi.jumlah_bogie = kodefikasi_req.jumlah_bogie
-        kodefikasi.kelas = kodefikasi_req.kelas
-        kodefikasi.deskripsi = kodefikasi_req.deskripsi
+        kodefikasi.nama = request.body.nama
+        kodefikasi.user_id = request.body.user_id
+        kodefikasi.sarana_id = request.body.sarana_id
+        kodefikasi.kode = request.body.kode
+        kodefikasi.jumlah_gandar = request.body.jumlah_gandar
+        kodefikasi.jumlah_bogie = request.body.jumlah_bogie
+        kodefikasi.kelas = request.body.kelas
+        kodefikasi.deskripsi = request.body.deskripsi
 
         const pic = request.file('gambar')
 
@@ -81,8 +81,8 @@ class KodefikasiController {
             deskripsi: 'string:allowNull'
         }
 
-        const kodefikasi_req = request.only(['nama', 'kode', 'jumlah_gandar', 'jumlah_bogie', 'user_id', 'sarana_id', 'kelas', 'gambar', 'deskripsi'])
-        const validation = await validate(kodefikasi_req, rules)
+        const request.body = request.only(['nama', 'kode', 'jumlah_gandar', 'jumlah_bogie', 'user_id', 'sarana_id', 'kelas', 'gambar', 'deskripsi'])
+        const validation = await validate(request.body, rules)
 
         if (validation.fails()) {
             return response.json({
@@ -91,14 +91,14 @@ class KodefikasiController {
         }
 
         const kodefikasi = await Kodefikasi.find(request.params.id)
-        kodefikasi.nama = kodefikasi_req.nama
-        kodefikasi.user_id = kodefikasi_req.user_id
-        kodefikasi.sarana_id = kodefikasi_req.sarana_id
-        kodefikasi.kode = kodefikasi_req.kode
-        kodefikasi.jumlah_gandar = kodefikasi_req.jumlah_gandar
-        kodefikasi.jumlah_bogie = kodefikasi_req.jumlah_bogie
-        kodefikasi.kelas = kodefikasi_req.kelas
-        kodefikasi.deskripsi = kodefikasi_req.deskripsi
+        kodefikasi.nama = request.body.nama
+        kodefikasi.user_id = request.body.user_id
+        kodefikasi.sarana_id = request.body.sarana_id
+        kodefikasi.kode = request.body.kode
+        kodefikasi.jumlah_gandar = request.body.jumlah_gandar
+        kodefikasi.jumlah_bogie = request.body.jumlah_bogie
+        kodefikasi.kelas = request.body.kelas
+        kodefikasi.deskripsi = request.body.deskripsi
 
         const pic = request.file('gambar')
 
