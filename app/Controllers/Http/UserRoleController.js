@@ -6,13 +6,19 @@ class UserRoleController {
     async showUserRole({request, response}) {
         const user_role = await UserRole.all()
 
-        return response.json(user_role);
+        return response.json({
+            message : 'Success',
+            result : user_role
+        })
     }
 
     async userRoleId({request, response, params}) {
         const user_role = await UserRole.find(params.id)
 
-        return response.json(user_role);
+        return response.json({
+            message : 'Success',
+            result : user_role
+        })
     }
 
     async addUserRole({request, response}) {
@@ -37,7 +43,7 @@ class UserRoleController {
         return response.json({
             message : 'Success',
             data : user_role
-        });
+        })
     }
 
     async editUserRole({request, response, params}) {
@@ -60,7 +66,7 @@ class UserRoleController {
     async deleteUserRole({request, response, params}) {
         const user_role = await UserRole.find(params.id)
         if (!user_role) {
-            return response.status(404).json({data: 'Role not found'})
+            return response.status(404).json({message: 'Role not found'})
         }
         await user_role.delete()
 

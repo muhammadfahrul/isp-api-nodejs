@@ -7,6 +7,10 @@ class Sarana extends Model {
     static get table () {
         return 'sarana'
     }
+
+    kodefikasi() {
+        return this.hasMany('App/Models/Kodefikasi')
+    }
 }
 
 module.exports = Sarana

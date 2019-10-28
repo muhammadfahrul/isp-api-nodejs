@@ -36,7 +36,19 @@ class User extends Model {
   }
 
   static get table () {
-    return 'user'
+    return 'users'
+  }
+
+  kodefikasi() {
+    return this.hasMany('App/Models/Kodefikasi')
+  }
+
+  klasifikasi() {
+    return this.hasMany('App/Models/Klasifikasi')
+  }
+
+  user_role() {
+    return this.belongsTo('App/Models/UserRole')
   }
 }
 
