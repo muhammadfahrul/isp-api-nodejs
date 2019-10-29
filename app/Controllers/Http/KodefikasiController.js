@@ -81,8 +81,7 @@ class KodefikasiController {
             deskripsi: 'string:allowNull'
         }
 
-        const request.body = request.only(['nama', 'kode', 'jumlah_gandar', 'jumlah_bogie', 'user_id', 'sarana_id', 'kelas', 'gambar', 'deskripsi'])
-        const validation = await validate(request.body, rules)
+        const validation = await validate(request.all(), rules)
 
         if (validation.fails()) {
             return response.json({
