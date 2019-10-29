@@ -71,7 +71,14 @@ class UserController {
     }
 
     async deleteUsers({request, response}) {
-        
+        const user = await User.find(request.params.id)
+        await user.delete()
+
+        return response.json({
+            message: 'Success',
+            status: 200,
+            data = user
+        })
     }
 }
 
