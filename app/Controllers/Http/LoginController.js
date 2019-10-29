@@ -1,10 +1,25 @@
 const User = use("App/Models/User");
 const Hash = use('Hash')
 const Helpers = use('Helpers')
+const { validate } = use('Validator');
 'use strict'
 
 class LoginController {
     async facebook({ request, response }) {
+        const rules = {
+            facebook_id: 'required',
+            name: 'required',
+            email: 'required',
+        }
+
+        const validation = await validate(request.all(), rules);
+
+        if(validation.fails()) {
+            return response.json({
+                message: validation.messages()
+            })
+        }
+
         let facebook_id = request.body.facebook_id;
         let facebook_name = request.body.name;
         let facebook_email = request.body.email;
@@ -20,15 +35,18 @@ class LoginController {
             overwrite: true
         });
 
-
-
-
-
         let checkUser = await User.query().where('facebook_id', facebook_id).first();
 
         const apiToken = await Hash.make(facebook_id);
-        if (!checkUser) {
 
+        if (!checkUser) {
+            
+            let checkEmail = User.query().where('email', facebook_email).first();
+            if(checkEmail) {
+                return response.status(422).json({message: [{message: 'Email sudah terdaftar',field:'email',validation:'unique'}]});
+            }
+            
+            // DAFTAR USER BARU
             const createUser = new User();
             createUser.nama = facebook_name;
             createUser.email = facebook_email;
@@ -39,7 +57,7 @@ class LoginController {
 
             response.json({
                 'status': true,
-                'message': 'Sukses Login',
+                'message': 'Sukses Daftar',
                 'token': apiToken,
             });
         }else{
@@ -59,6 +77,19 @@ class LoginController {
         let google_name = request.body.name;
         let google_email = request.body.email;
 
+        const rules = {
+            google_id: 'required',
+            name: 'required',
+            email: 'required',
+        }
+
+        const validation = await validate(request.all(), rules);
+
+        if (validation.fails()) {
+            return response.json({
+                message: validation.messages()
+            })
+        }
 
         // FACEBOOK PHOTO
         const google_photo = request.file('photo', {
@@ -69,12 +100,16 @@ class LoginController {
             name: `${google_id}.jpg`,
             overwrite: true
         });
-        
+
 
         let checkUser = await User.query().where('google_id', google_id).first();
 
         const apiToken = await Hash.make(google_id);
         if (!checkUser) {
+            let checkEmail = User.query().where('email', google_email).first();
+            if (checkEmail) {
+                return response.status(422).json({ message: [{ message: 'Email sudah terdaftar', field: 'email', validation: 'unique' }] });
+            }
 
             const createUser = new User();
             createUser.nama = google_name;
@@ -86,7 +121,7 @@ class LoginController {
 
             response.json({
                 'status': true,
-                'message': 'Sukses Login',
+                'message': 'Sukses Daftar',
                 'token': apiToken,
             });
         } else {
