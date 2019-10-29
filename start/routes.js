@@ -20,14 +20,18 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
+Route.post('api/v1/login/facebook', 'LoginController.facebook')
+Route.post('api/v1/login/google', 'LoginController.google')
+
 Route.group(() => {
+
   Route.get('/users', 'UserController.showUsers')
   Route.get('/users/:id', 'UserController.usersId')
   Route.post('/add-users', 'UserController.addUsers')
   Route.put('/update-users/:id', 'UserController.editUsers')
   Route.delete('/delete-users/:id', 'UserController.deleteUsers')
 
-  
+
   Route.get('/user-role', 'UserRoleController.showUserRole')
   Route.get('/user-role/:id', 'UserRoleController.userRoleId')
   Route.post('/add-user-role', 'UserRoleController.addUserRole')
@@ -68,8 +72,4 @@ Route.group(() => {
   Route.post('/add-galeri', 'GaleriController.addGaleri')
   Route.put('/update-galeri/:id', 'GaleriController.editGaleri')
   Route.delete('/delete-galeri/:id', 'GaleriController.deleteGaleri')
-
-  Route.post('login/facebook', 'LoginController.facebook')
-  Route.post('login/google', 'LoginController.google')
-
-}).prefix('api/v1')
+}).prefix('api/v1').middleware('Auth')
