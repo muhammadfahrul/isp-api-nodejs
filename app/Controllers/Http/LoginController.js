@@ -41,14 +41,16 @@ class LoginController {
 
         if (!checkUser) {
             
-            let checkEmail = User.query().where('email', facebook_email).first();
-            if(checkEmail) {
-                return response.status(422).json({message: [{message: 'Email sudah terdaftar',field:'email',validation:'unique'}]});
+            let checkEmail = User.query().where('email', facebook_email).fetch();
+            // return checkEmail;
+            if(checkEmail.length >= 1) {
+                return response.status(422).json({message: [{message: 'Email telah terdaftar',field:'email',validation:'unique'}]});
             }
             
             // DAFTAR USER BARU
             const createUser = new User();
             createUser.nama = facebook_name;
+            createUser.facebook_id = facebook_id;
             createUser.email = facebook_email;
             createUser.photo_profile = imageName;
             createUser.api_token = apiToken;
@@ -59,6 +61,7 @@ class LoginController {
                 'status': true,
                 'message': 'Sukses Daftar',
                 'token': apiToken,
+                'user': createUser
             });
         }else{
             checkUser.api_token = apiToken;
@@ -114,6 +117,7 @@ class LoginController {
             const createUser = new User();
             createUser.nama = google_name;
             createUser.email = google_email;
+            createUser.google_id = google_id;
             createUser.photo_profile = imageName;
             createUser.api_token = apiToken;
             createUser.user_role_id = 2; // 1 = ADMIN, 2 = USER
