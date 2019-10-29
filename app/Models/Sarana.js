@@ -11,6 +11,10 @@ class Sarana extends Model {
     kodefikasi() {
         return this.hasMany('App/Models/Kodefikasi')
     }
+
+    users() {
+        return this.belongsTo('App/Models/User')
+    }
 }
 
 module.exports = Sarana

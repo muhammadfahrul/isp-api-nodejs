@@ -8,7 +8,7 @@ const Helpers = use('Helpers')
 
 class SaranaController {
     async showSarana({request, response}) {
-        const sarana = await Sarana.query('')
+        const sarana = await Sarana.query().with('users').fetch()
         
         return response.json({
             status: 200,
@@ -18,7 +18,7 @@ class SaranaController {
     }
 
     async saranaId({request, response}) {
-        const saranaId = await Sarana.find(request.params.id)
+        const saranaId = await Sarana.query().where('id', request.params.id).with('users').fetch()
 
         return response.json({
             status: 201,
@@ -51,7 +51,10 @@ class SaranaController {
             types: ['image'],
             size: '2mb'
         })
-        await myPicture.move(Helpers.publicPath('uploads/sarana'))
+        await myPicture.move(Helpers.publicPath('uploads/sarana'), {
+            name: addSarana.gambar,
+            overwrite: true
+        })
         addSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
 
         addSarana.deskripsi = request.body.deskripsi
@@ -93,7 +96,8 @@ class SaranaController {
 
         const myPicture = request.file('gambar')
         myPicture.move(Helpers.publicPath('uploads/sarana'),{
-            name: editSarana.gambar
+            name: editSarana.gambar,
+            overwrite: true
         })
         editSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
 

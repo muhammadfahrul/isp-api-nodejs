@@ -28,6 +28,7 @@ class LoginController {
         // FACEBOOK PHOTO
         const facebook_photo = request.file('photo', {
             types: ['image'],
+            size: '2mb'
         });
         let imageName = `${facebook_id}.jpg`;
         await facebook_photo.move(Helpers.tmpPath('images/users'), {

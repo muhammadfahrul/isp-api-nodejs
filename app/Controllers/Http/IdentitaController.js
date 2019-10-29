@@ -15,7 +15,7 @@ class IdentitaController {
     }
 
     async identitasId({request, response, params}) {
-        const identitas = await Identitas.find(params.id)
+        const identitas = await Identitas.query().where('id', params.id).with('users').with('klasifikasi').fetch()
 
         return response.json({
             status: 200,
@@ -53,7 +53,10 @@ class IdentitaController {
             size: '2mb'
         })
 
-        await myPicture.move(Helpers.publicPath('uploads/identitas'))
+        await myPicture.move(Helpers.publicPath('uploads/identitas'), {
+            name: identitas.gambar,
+            overwrite: true
+        })
         identitas.gambar = new Date().getTime()+'.'+myPicture.subtype
 
         identitas.deskripsi = request.body.deskripsi        
@@ -96,7 +99,10 @@ class IdentitaController {
             size: '2mb'
         })
 
-        await myPicture.move(Helpers.publicPath('uploads/identitas'))
+        await myPicture.move(Helpers.publicPath('uploads/identitas'),{
+            name: identitas.gambar,
+            overwrite: true
+        })
         identitas.gambar = new Date().getTime()+'.'+myPicture.subtype
 
         identitas.deskripsi = request.body.deskripsi        

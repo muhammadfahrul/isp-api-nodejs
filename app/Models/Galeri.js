@@ -7,10 +7,10 @@ class Galeri extends Model {
     static get table () {
         return 'galeri'
     }
-    Identitas(){
-    	return this.belongsTo('App/Models/Identitas')
+    identitas(){
+    	return this.belongsTo('App/Models/Identita')
     }
-    User(){
+    users(){
         return this.belongsTo('App/Models/User')
     }
 }

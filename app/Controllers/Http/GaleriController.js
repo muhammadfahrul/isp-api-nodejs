@@ -2,6 +2,7 @@
 
 const Galeri = use('App/Models/Galeri')
 const {validate} = use('Validator')
+const Helpers = use('Helpers')
 
 class GaleriController {
     async showGaleri({request, response}) {
@@ -15,7 +16,7 @@ class GaleriController {
     }
 
     async galeriId({request, response}) {
-        const galeri = await Galeri.find(request.params.id)
+        const galeri = await Galeri.query().where('id', request.params.id).with('users').with('identitas').fetch()
 
         return response.json({
             status: true,
@@ -27,8 +28,7 @@ class GaleriController {
     async addGaleri({request, response}) {
         const rules = {
             user_id : 'required|exists:users,id',
-            identitas_id : 'required|exists:identitas,id',
-            gambar : 'required', 
+            identitas_id : 'required|exists:identitas,id',        
             deskripsi : 'required',
             is_active : 'required'
         }
@@ -39,7 +39,7 @@ class GaleriController {
         if (validation.fails())
         {
             return response.json({
-                message : validation.message()
+                message : validation.messages()
             })
         }
 
@@ -52,8 +52,11 @@ class GaleriController {
             size: '2mb'
         })
         
-        await myPicture.move(Helpers.publicPath('uploads/sarana'))
-        addSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
+        await myPicture.move(Helpers.publicPath('uploads/galeri'),{
+            name: galeri.gambar,
+            overwrite: true
+        })
+        galeri.gambar = new Date().getTime()+'.'+myPicture.subtype
         
         galeri.deskripsi = request.body.deskripsi
         galeri.is_active = request.body.is_active
@@ -62,12 +65,12 @@ class GaleriController {
             return myPicture.error()
         }
 
-        await addSarana.save()
+        await galeri.save()
 
         return response.json({
             status: 400,
             message: 'Created Gallery Successfully',
-            data: addSarana
+            data: galeri
         })
 
     }
@@ -75,8 +78,7 @@ class GaleriController {
     async editGaleri({request, response}) {
         const rules = {
             user_id : 'required|exists:users,id',
-            identitas_id : 'required|exists:identitas,id',
-            gambar : 'required', 
+            identitas_id : 'required|exists:identitas,id',        
             deskripsi : 'required',
             is_active : 'required'
         }
@@ -87,7 +89,7 @@ class GaleriController {
         if (validation.fails())
         {
             return response.json({
-                message : validation.message()
+                message : validation.messages()
             })
         }
 
@@ -100,8 +102,11 @@ class GaleriController {
             size: '2mb'
         })
         
-        await myPicture.move(Helpers.publicPath('uploads/sarana'))
-        addSarana.gambar = new Date().getTime()+'.'+myPicture.subtype
+        await myPicture.move(Helpers.publicPath('uploads/galeri'), {
+            name: galeri.gambar,
+            overwrite: true
+        })
+        galeri.gambar = new Date().getTime()+'.'+myPicture.subtype
         
         galeri.deskripsi = request.body.deskripsi
         galeri.is_active = request.body.is_active
@@ -110,12 +115,12 @@ class GaleriController {
             return myPicture.error()
         }
 
-        await addSarana.save()
+        await galeri.save()
 
         return response.json({
             status: 400,
-            message: 'Created Gallery Successfully',
-            data: addSarana
+            message: 'Edited Gallery Successfully',
+            data: galeri
         })
     }
 
@@ -132,7 +137,8 @@ class GaleriController {
 
         return response.json({
             status : 204,
-            message : 'Success'
+            message : 'Success',
+            data: galeri
         })
      
     }

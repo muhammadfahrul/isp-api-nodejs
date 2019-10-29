@@ -5,7 +5,7 @@ const Helpers = use('Helpers')
 
 class KodefikasiController {
     async showKodefikasi({request, response}) {
-        const kodefikasi = await Kodefikasi.query().with('users').with('sarana').orderBy('created_at', 'desc').fetch()
+        const kodefikasi = await Kodefikasi.query().with('users').with('sarana').fetch()
         return response.json({
             message: 'Success',
             result: kodefikasi
@@ -13,7 +13,7 @@ class KodefikasiController {
     }
 
     async kodefikasiId({request, response, params}) {
-        const kodefikasi = await Kodefikasi.find(params.id)
+        const kodefikasi = await Kodefikasi.query().where('id', params.id).with('users').with('sarana').fetch()
 
         return response.json({
             message : 'Success',
@@ -57,7 +57,8 @@ class KodefikasiController {
         kodefikasi.gambar = new Date().getTime()+'.'+pic.subtype
 
         await pic.move(Helpers.publicPath('uploads/kodefikasi'), {
-            name : kodefikasi.gambar
+            name : kodefikasi.gambar,
+            overwrite: true
         })
 
         await kodefikasi.save()
@@ -104,7 +105,8 @@ class KodefikasiController {
         kodefikasi.gambar = new Date().getTime()+'.'+pic.subtype
 
         await pic.move(Helpers.publicPath('uploads/kodefikasi'), {
-            name : kodefikasi.gambar
+            name : kodefikasi.gambar,
+            overwrite: true
         })
 
         await kodefikasi.save()

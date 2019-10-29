@@ -14,7 +14,7 @@ class KlasifikasiController {
     }
 
     async klasifikasiId({request, response, params}) {
-        const klasifikasi = await Klasifikasi.find(params.id)
+        const klasifikasi = await Klasifikasi.query().where('id', request.params.id).with('users').with('kodefikasi').fetch()
 
         return response.json({
             status: 200,
@@ -55,7 +55,10 @@ class KlasifikasiController {
             size: '2mb'
         })
 
-        await myPicture.move(Helpers.publicPath('uploads/klasifikasi'))
+        await myPicture.move(Helpers.publicPath('uploads/klasifikasi'), {
+            name: klasifikasi.gambar,
+            overwrite: true
+        })
 
         klasifikasi.gambar = new Date().getTime()+'.'+myPicture.subtype
 
@@ -103,7 +106,10 @@ class KlasifikasiController {
             size: '2mb'
         })
 
-        await myPicture.move(Helpers.publicPath('uploads/klasifikasi'))
+        await myPicture.move(Helpers.publicPath('uploads/klasifikasi'),{
+            name: klasifikasi.gambar,
+            overwrite: true
+        })
 
         klasifikasi.gambar = new Date().getTime()+'.'+myPicture.subtype
 
