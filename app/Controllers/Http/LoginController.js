@@ -40,13 +40,10 @@ class LoginController {
         const apiToken = await Hash.make(facebook_id);
 
         if (!checkUser) {
-            const rules = {
-                email : 'exists:users,email'
-            }
             
-            let checkEmail = await validate(request.all(), rules)
+            let checkEmail = User.query().where('email', facebook_email).fetch();
             // return checkEmail;
-            if(checkEmail) {
+            if(checkEmail.length >= 1) {
                 return response.status(422).json({message: [{message: 'Email telah terdaftar',field:'email',validation:'unique'}]});
             }
             

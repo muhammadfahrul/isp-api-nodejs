@@ -8,7 +8,7 @@ const Helpers = use('Helpers')
 
 class SaranaController {
     async showSarana({request, response}) {
-        const sarana = await Sarana.all()
+        const sarana = await Sarana.query('')
         
         return response.json({
             status: 200,
