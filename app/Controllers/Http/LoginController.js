@@ -26,7 +26,7 @@ class LoginController {
 
 
         // FACEBOOK PHOTO
-        const facebook_photo = request.file('photo', {
+        const facebook_photo = request.file('photo_profile', {
             types: ['image'],
             size: '2mb'
         });
@@ -77,27 +77,29 @@ class LoginController {
     }
 
     async google({ request, response }) {
-        let google_id = request.body.google_id;
-        let google_name = request.body.name;
-        let google_email = request.body.email;
-
         const rules = {
             google_id: 'required',
-            name: 'required',
+            nama: 'required',
             email: 'required',
         }
 
         const validation = await validate(request.all(), rules);
 
-        if (validation.fails()) {
+        if(validation.fails()) {
             return response.json({
                 message: validation.messages()
             })
         }
 
-        // FACEBOOK PHOTO
-        const google_photo = request.file('photo', {
+        let google_id = request.body.google_id;
+        let google_name = request.body.nama;
+        let google_email = request.body.email;
+
+
+        // google PHOTO
+        const google_photo = request.file('photo_profile', {
             types: ['image'],
+            size: '2mb'
         });
         let imageName = `${google_id}.jpg`;
         await google_photo.move(Helpers.tmpPath('images/users'), {
@@ -105,20 +107,23 @@ class LoginController {
             overwrite: true
         });
 
-
         let checkUser = await User.query().where('google_id', google_id).first();
 
         const apiToken = await Hash.make(google_id);
-        if (!checkUser) {
-            let checkEmail = User.query().where('email', google_email).first();
-            if (checkEmail) {
-                return response.status(422).json({ message: [{ message: 'Email sudah terdaftar', field: 'email', validation: 'unique' }] });
-            }
 
+        if (!checkUser) {
+            
+            let checkEmail = User.query().where('email', google_email).fetch();
+            // return checkEmail;
+            if(checkEmail.length >= 1) {
+                return response.status(422).json({message: [{message: 'Email telah terdaftar',field:'email',validation:'unique'}]});
+            }
+            
+            // DAFTAR USER BARU
             const createUser = new User();
             createUser.nama = google_name;
-            createUser.email = google_email;
             createUser.google_id = google_id;
+            createUser.email = google_email;
             createUser.photo_profile = imageName;
             createUser.api_token = apiToken;
             createUser.user_role_id = 2; // 1 = ADMIN, 2 = USER
@@ -128,11 +133,12 @@ class LoginController {
                 'status': true,
                 'message': 'Sukses Daftar',
                 'token': apiToken,
+                'user': createUser
             });
-        } else {
+        }else{
             checkUser.api_token = apiToken;
             checkUser.save();
-
+            
             response.json({
                 'status': true,
                 'message': 'Sukses Login',
