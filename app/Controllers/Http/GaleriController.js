@@ -1,6 +1,7 @@
 'use strict'
 
 const Galeri = use('App/Models/Galeri')
+const Identitas = use('App/Models/Identita')
 const {validate} = use('Validator')
 const Helpers = use('Helpers')
 

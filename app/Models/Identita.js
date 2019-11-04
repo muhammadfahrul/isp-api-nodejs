@@ -15,6 +15,10 @@ class Identita extends Model {
     users(){
         return this.belongsTo('App/Models/User')
     }
+
+    galeri(){
+        return this.hasMany('App/Models/Galeri')
+    }
 }
 
 module.exports = Identita
