@@ -65,7 +65,7 @@ class IdentitaController {
 
         return response.json({
             status: 201,
-            message: 'Success',
+            message: 'Created Identitas Successfully',
             data: identitas  
         })
     }

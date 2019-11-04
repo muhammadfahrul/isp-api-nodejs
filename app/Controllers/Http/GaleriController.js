@@ -137,7 +137,7 @@ class GaleriController {
 
         return response.json({
             status : 204,
-            message : 'Success',
+            message : 'Deleted Gallery Successfully',
             data: galeri
         })
      
