@@ -1,9 +1,37 @@
 'use strict'
 const Identitas = use('App/Models/Identita')
+const Sarana = use('App/Models/Sarana')
+const Kodefikasi = use('App/Models/Kodefikasi')
 const { validate } = use('Validator')
 const Helpers = use('Helpers')
+const Database = use('Database')
 
 class IdentitaController {
+    async searchAllKode ({request, response}) {
+        // const sarana = await Database.select('id', 'nama').from('sarana')
+        // const kodefikasi = await Database.select('id', 'kode', 'nama').from('kodefikasi')
+        // const klasifikasi = await Database.select('id', 'nama').from('klasifikasi')
+        // const identitas = await Database.select('tahun', 'nomor_urut').from('identitas')
+        // const galeri = await Database.select('gambar').from('galeri')
+        const kodefikasi =  await Database.select('id','kode','nama').from('kodefikasi')
+
+        const sarana = await kodefikasi.sarana().fetch()
+
+        return response.json({
+            message: 'Search Data',
+            result: sarana
+        })
+    }
+
+    async searchKode ({request, response}) {
+        const sarana = await Sarana.query().with('kodefikasi').with('klasifikasi').with('identitas').with('galeri').fetch()
+
+        return response.json({
+            message: 'Search Data',
+            result: sarana
+        })
+    }
+
     async showIdentitas({request, response}) {
         const identitas = await Identitas.query().with('users').with('klasifikasi').fetch()
 

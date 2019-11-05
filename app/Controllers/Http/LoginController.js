@@ -72,6 +72,7 @@ class LoginController {
                 'status': true,
                 'message': 'Sukses Login',
                 'token': apiToken,
+                'user': checkUser
             });
         }
     }
@@ -143,6 +144,7 @@ class LoginController {
                 'status': true,
                 'message': 'Sukses Login',
                 'token': apiToken,
+                'user': checkUser
             });
         }
     }

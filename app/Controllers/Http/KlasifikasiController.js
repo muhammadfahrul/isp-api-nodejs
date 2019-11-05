@@ -6,6 +6,7 @@ const Helpers = use('Helpers')
 class KlasifikasiController {
     async showKlasifikasi({request, response}) {
         const klasifikasi = await Klasifikasi.query().with('users').with('kodefikasi').fetch()
+
         return response.json({
             status: 200,
             message : 'Success',

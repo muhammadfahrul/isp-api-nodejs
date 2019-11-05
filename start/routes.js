@@ -38,7 +38,8 @@ Route.group(() => {
   Route.put('/update-user-role/:id', 'UserRoleController.editUserRole')
   Route.delete('/delete-user-role/:id', 'UserRoleController.deleteUserRole')
 
-
+  Route.get('/identitas/search/', 'IdentitaController.searchAllKode')
+  Route.get('/identitas/search/:kode/', 'IdentitaController.searchKode')
   Route.get('/identitas', 'IdentitaController.showIdentitas')
   Route.get('/identitas/:id', 'IdentitaController.identitasId')
   Route.post('/add-identitas', 'IdentitaController.addIdentitas')

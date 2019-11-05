@@ -16,8 +16,16 @@ class Identita extends Model {
         return this.belongsTo('App/Models/User')
     }
 
-    galeri(){
-        return this.hasMany('App/Models/Galeri')
+    // galeri(){
+    //     return this.hasMany('App/Models/Galeri')
+    // }
+
+    sarana(){
+        return this.belongsTo('App/Models/Sarana')
+    }
+
+    kodefikasi() {
+        return this.belongsTo('App/Models/Kodefikasi')
     }
 }
 

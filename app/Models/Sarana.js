@@ -15,6 +15,18 @@ class Sarana extends Model {
     users() {
         return this.belongsTo('App/Models/User')
     }
+
+    klasifikasi() {
+        return this.belongsTo('App/Models/Klasifikasi')
+    }
+
+    identitas() {
+        return this.belongsTo('App/Models/Identita')
+    }
+
+    galeri() {
+        return this.belongsTo('App/Models/Galeri')
+    }
 }
 
 module.exports = Sarana
