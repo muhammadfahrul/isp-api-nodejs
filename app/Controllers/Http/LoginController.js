@@ -57,12 +57,12 @@ class LoginController {
             createUser.api_token = apiToken;
             createUser.user_role_id = 2; // 1 = ADMIN, 2 = USER
             createUser.save();
-
+            
             response.json({
                 'status': true,
                 'message': 'Sukses Daftar',
                 'token': apiToken,
-                'user': createUser
+                'user': createUser.nama
             });
         }else{
             checkUser.api_token = apiToken;
@@ -134,7 +134,7 @@ class LoginController {
                 'status': true,
                 'message': 'Sukses Daftar',
                 'token': apiToken,
-                'user': createUser
+                'user': createUser.nama
             });
         }else{
             checkUser.api_token = apiToken;
