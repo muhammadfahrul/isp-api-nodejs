@@ -5,12 +5,11 @@ const {validate} = use('Validator')
 
 class UserController {
     async showUsers({request, response}) {
-        const user = await User.all()
+        const users = await User.all()
 
         return response.json({
-            status: true,
             message: 'Data User',
-            data: user
+            data: users
         })
     }
 
@@ -18,7 +17,6 @@ class UserController {
         const user = await User.find(request.params.id)
 
         return response.json({
-            status: true,
             message: 'User Id',
             data: user
         })
@@ -41,7 +39,7 @@ class UserController {
         }
 
         const user = new User()
-        user.user_role_id = user_req.user_role_id
+        user.user_role_id = request.body.user_role_id
         user.nama = user_req.nama
         user.email = user_req.email
         user.password = user_req.password
@@ -60,8 +58,8 @@ class UserController {
             return response.status(404).json({data : 'Data User Not Found'})
         }
 
-        user.user_role_id = user_req.user_role.id
-        await user_role.save()
+        user.user_role_id = request.body.user_role.id
+        await user.save()
 
         return response.json({
             message : 'Succces',
@@ -77,7 +75,7 @@ class UserController {
         return response.json({
             message: 'Success',
             status: 200,
-            data = user
+            data: user
         })
     }
 }

@@ -35,7 +35,7 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
-  static get table () {
+  static get table() {
     return 'users'
   }
   
