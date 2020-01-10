@@ -34,7 +34,7 @@ class GaleriController {
             is_active : 'required'
         }
 
-        // const galeri_req = request.only(['user_id','identitas_id','gambar','deskripsi','is_active'])
+        // const galeri_req = request.only(['user_id','identitas_id','deskripsi','is_active'])
         const validation = await validate(request.all(), rules)
 
         if (validation.fails())
@@ -84,7 +84,7 @@ class GaleriController {
             is_active : 'required'
         }
 
-        // const galeri_req = request.only(['user_id','identitas_id','gambar','deskripsi','is_active'])
+        // const galeri_req = request.only(['user_id','identitas_id','deskripsi','is_active'])
         const validation = await validate(request.all(), rules)
 
         if (validation.fails())

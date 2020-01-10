@@ -8,11 +8,11 @@ class Galeri extends Model {
         return 'galeri'
     }
     
-    users(){
+    users() {
         return this.belongsTo('App/Models/User')
     }
     
-    identitas(){
+    identitas() {
     	return this.belongsTo('App/Models/Identita')
     }
 
